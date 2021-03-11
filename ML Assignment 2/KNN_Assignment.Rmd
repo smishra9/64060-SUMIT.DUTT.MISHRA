@@ -1,0 +1,108 @@
+---
+title: "ASSIGNMENT 2"
+author: "Sumit Dutt Mishra"
+date: "10/03/2021"
+output: html_document
+---
+```{r}
+library(readr)
+library(dplyr)
+library(fastDummies)
+library(caret)
+library(class)
+```
+
+```{r}
+ub_dataset <- read_csv("UniversalBank.csv")
+
+summary(ub_dataset)
+```
+##Datacleaning
+```{r}
+#removing ID and ZipCode Columns from Dataset 
+ub_dataset <- ub_dataset[,c(-1,-5)]
+str(ub_dataset)
+
+#As personal loan is predictive variable so converting it to factor
+ub_dataset$`Personal Loan` <-as.factor(ub_dataset$`Personal Loan`)
+ub_dataset$Education <-as.factor(ub_dataset$Education)
+View(ub_dataset)
+
+#Dummying
+library(fastDummies)
+ub_dataset_d <- dummy_cols(ub_dataset %>% select(-`Personal Loan`))
+ub_dataset_d <- ub_dataset_d %>% select(-Education) %>% 
+  mutate(`Personal Loan` = ub_dataset$`Personal Loan`)
+```
+
+##Data Partition and preprocessing
+```{r}
+set.seed(300)
+index <- createDataPartition(ub_dataset_d$`Personal Loan`, p=0.6, list = FALSE)
+ub_dataset_train_df <- ub_dataset_d[index,]
+ub_dataset_test_df <- ub_dataset_d[-index,]
+
+
+#normalize the data.
+scale_fun <- preProcess(ub_dataset_train_df[,-14], method = c("center", "scale"))
+ub_dataset_train_norm <- predict(scale_fun, ub_dataset_train_df[,-14])
+ub_dataset_test_norm <- predict(scale_fun, ub_dataset_test_df[,-14])
+dim(ub_dataset_train_norm)
+summary(ub_dataset_train_norm)
+summary(ub_dataset_test_norm)
+```
+
+##KNN Modeling
+#1. Predicting the Customer with K=1
+```{r}
+#Predicting the Customer with K=1
+Q1 <- data.frame(40, 10, 84, 2, 2, 0, 0, 0, 1, 1, 0, 1, 0)
+knn_pred <- knn(ub_dataset_train_norm, Q1, cl=ub_dataset_train_df$`Personal Loan`, k=1, prob = 0.5)
+knn_pred
+```
+
+#2.	Choice of k
+```{r}
+accuracy.df <- data.frame(k = seq(1, 14, 1), accuracy = rep(0, 14))
+for(i in 1:14) {
+                  knn <- knn(ub_dataset_train_norm, ub_dataset_test_norm, cl = ub_dataset_train_df$`Personal Loan`, k = i)
+                  accuracy.df[i, 2] <- confusionMatrix(knn, ub_dataset_test_df$`Personal Loan`)$overall[1] 
+                }
+accuracy.df
+which.max( (accuracy.df$accuracy) ) #Here, our optimal k is 3
+```
+
+#3.	Validation data using the best k.
+```{r}
+knn.pred3 <- knn(ub_dataset_train_norm,ub_dataset_test_norm,cl=ub_dataset_train_df$`Personal Loan`,k=3,prob = TRUE)
+confusionMatrix(knn.pred3,ub_dataset_test_df$`Personal Loan`)
+```
+#4.	Classify the customer using the best k
+```{r}
+knn.pred4 <- knn(ub_dataset_train_norm, Q1, cl=ub_dataset_train_df$`Personal Loan`, k=3, prob = TRUE)
+knn.pred4
+```
+
+#5.	Repartition the data, this time into training, validation, and test sets (50% : 30% : 20%)
+```{r}
+set.seed(400)
+index_b <- createDataPartition(ub_dataset_d$`Personal Loan`, p=0.5, list = FALSE)
+ub_dataset_train_df2 <- ub_dataset_d[index_b,]
+val_test_idx <- ub_dataset_d[-index_b,]
+
+val_test_idx_b <- createDataPartition(val_test_idx$`Personal Loan`, p=0.6, list = FALSE)
+ub_dataset_val_df2 <- val_test_idx[val_test_idx_b,]
+ub_dataset_test_df2 <- val_test_idx[-val_test_idx_b,]
+
+#normalize the data.
+scale_fun_b <- preProcess(ub_dataset_train_df2[,-14], method = c("center", "scale"))
+ub_dataset_train_norm2 <- predict(scale_fun_b, ub_dataset_train_df2[,-14])
+ub_dataset_val_norm2 <- predict(scale_fun_b, ub_dataset_val_df2[,-14])
+ub_dataset_test_norm2 <- predict(scale_fun_b, ub_dataset_test_df2[,-14])
+
+knn.pred5 <- knn(ub_dataset_train_norm2, ub_dataset_val_norm2 , cl=ub_dataset_train_df2$`Personal Loan`, k=3, prob = TRUE)
+confusionMatrix(knn.pred5,ub_dataset_val_df2$`Personal Loan`)
+```
+
+
+
