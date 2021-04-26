@@ -1,0 +1,206 @@
+---
+title: "Assignment 5"
+author: "Sumit Dutt Mishra"
+date: "04/22/2021"
+output: html_document
+---
+
+Setting working directory
+```{r}
+
+set.seed(123)
+```
+
+
+
+Importing required library
+```{r,warning=FALSE,message=FALSE}
+library(cluster)
+library(caret)
+library(dendextend)
+library(knitr)
+library(factoextra)
+```
+
+
+#####Importing dataset(Cereals).
+```{r}
+library(readr)
+Cereals <- read_csv("Cereals.csv", col_types = cols(calories = col_number(), 
+protein = col_number(), fat = col_number(), 
+sodium = col_number(), fiber = col_number(), 
+carbo = col_number(), sugars = col_number(), 
+potass = col_number(), vitamins = col_number(), 
+shelf = col_number(), weight = col_number(), 
+cups = col_number(), rating = col_number()))
+data_cereals <- data.frame(Cereals[,4:16])
+
+```
+
+#####Preprocessing the data(i.e. removing NA values).
+
+```{r}
+data_cereals <- na.omit(data_cereals)
+```
+
+
+#####Normalizing the Data
+```{r}
+data_cereals_scaled <- scale(data_cereals)
+```
+
+###(1) Applying  hierarchical clustering to the data using Euclidean distance to the normalized measurements and using Agnes to compare the clustering from single linkage, complete linkage, average linkage, and Ward. Choosing the best method.
+
+####Calculating Dissimilarity Matrix and performing Hierarchial Clustering
+
+```{r}
+distance <- dist(data_cereals_scaled, method = "euclidean")
+
+hier.clust_complete <- hclust(distance, method = "complete")
+```
+
+####Plotting the dendogram
+
+```{r}
+plot(hier.clust_complete, cex = 0.7, hang = -1)
+```
+
+
+####Using agnes() function to perfrom clustering with single linkage, complete linkage, average linkage and Ward.
+
+
+```{r}
+hier.clust_single <- agnes(data_cereals_scaled, method = "single")
+hier.clust_complete <- agnes(data_cereals_scaled, method = "complete")
+hier.clust_average <- agnes(data_cereals_scaled, method = "average")
+hier.clust_ward <- agnes(data_cereals_scaled, method = "ward")
+
+```
+
+####Comparing the agglomerative coefficients
+
+#####Single Linkage vs Complete Linkage vs Average Linkage vs Ward
+
+```{r}
+print(hier.clust_single$ac)
+print(hier.clust_complete$ac)
+print(hier.clust_average$ac)
+print(hier.clust_ward$ac)
+```
+
+### Here we can see that Ward method is best with highest value of 0.9046042. 
+
+
+###(2) Choosing the clusters:
+####Plotting the agnes using ward method and cutting the Dendogram.
+###We will take 5 clusters (i.e. k = 5 ) after observing the distance.
+
+```{r}
+pltree(hier.clust_ward, cex = 0.7, hang = -1, main = "Dendrogram of agnes (Using Ward)")
+rect.hclust(hier.clust_ward, k = 5, border = 1:4)
+Cluster1 <- cutree(hier.clust_ward, k=5)
+dataframe2 <- as.data.frame(cbind(data_cereals_scaled,Cluster1))
+```
+
+###(3)Commenting on the structure of the clusters and on their stability 
+
+Creating Partitions
+
+```{r}
+Part_1 <- data_cereals[1:50,]
+Part_2 <- data_cereals[51:74,]
+```
+
+#### Performing Hierarchial Clustering, plotting dendogram and then cutting the dendogram by taking k = 5   .
+
+```{r}
+ag_single <- agnes(scale(Part_1), method = "single")
+ag_complete <- agnes(scale(Part_1), method = "complete")
+ag_average <- agnes(scale(Part_1), method = "average")
+ag_ward <- agnes(scale(Part_1), method = "ward")
+
+
+
+
+cbind(single=ag_single$ac , complete=ag_complete$ac , average= ag_average$ac , ward= ag_ward$ac)
+pltree(ag_ward, cex = 0.7, hang = -1, main = "Dendogram of Agnes with Partitioned Data (Using Ward)")
+
+rect.hclust(ag_ward, k = 5, border = 1:4)
+
+cut_2 <- cutree(ag_ward, k = 5)
+
+```
+
+####Calculating the centeroids.
+
+```{r}
+result <- as.data.frame(cbind(Part_1, cut_2))
+result[result$cut_2==1,]
+centroid_1 <- colMeans(result[result$cut_2==1,])
+
+result[result$cut_2==2,]
+centroid_2 <- colMeans(result[result$cut_2==2,])
+
+result[result$cut_2==3,]
+centroid_3 <- colMeans(result[result$cut_2==3,])
+
+result[result$cut_2==4,]
+centroid_4 <- colMeans(result[result$cut_2==4,])
+
+centroids <- rbind(centroid_1, centroid_2, centroid_3, centroid_4)
+
+x2 <- as.data.frame(rbind(centroids[,-14], Part_2))
+
+```
+
+####Calculating the Distance
+
+```{r}
+Distance_1 <- get_dist(x2)
+
+Matrix_1 <- as.matrix(Distance_1)
+
+dataframe1 <- data.frame(data=seq(1,nrow(Part_2),1), Clusters = rep(0,nrow(Part_2)))
+
+for(i in 1:nrow(Part_2)) 
+  {dataframe1[i,2] <- which.min(Matrix_1[i+4, 1:4])}
+
+dataframe1
+
+cbind(dataframe2$Cluster1[51:74], dataframe1$Clusters)
+table(dataframe2$Cluster1[51:74] == dataframe1$Clusters)
+```
+
+
+###We are getting 12 FALSE and 12 TRUE, so we can conclude that the model is partially stable.
+
+# 4. The elementary public schools would like to choose a set of cereals to include in their daily cafeterias. Every day a different cereal is offered, but all cereals should support a healthy diet. For this goal, you are requested to find a cluster of “healthy cereals.” Should the data be normalized? If not, how should they be used in the cluster analysis?
+
+####Clustering Healthy Cereals.
+```{r}
+Healthy_Cereals <- Cereals
+Healthy_Cereals_na <- na.omit(Healthy_Cereals)
+
+Clusthealthy <- cbind(Healthy_Cereals_na, Cluster1)
+
+Clusthealthy[Clusthealthy$Cluster1==1,]
+Clusthealthy[Clusthealthy$Cluster1==2,]
+Clusthealthy[Clusthealthy$Cluster1==3,]
+Clusthealthy[Clusthealthy$Cluster1==4,]
+
+```
+
+#### Mean ratings to determine the best cluster.
+
+```{r}
+
+
+mean(Clusthealthy[Clusthealthy$Cluster1==1,"rating"])
+mean(Clusthealthy[Clusthealthy$Cluster1==2,"rating"])
+mean(Clusthealthy[Clusthealthy$Cluster1==3,"rating"])
+mean(Clusthealthy[Clusthealthy$Cluster1==4,"rating"])
+
+```
+###As we can se that the mean ratings of the cluster1 is the highest(i.e. 73.84446) , So we will choose cluster 1. 
+
+
