@@ -1,0 +1,454 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\begin{longtable}[]{@{}l@{}}
+\toprule
+\endhead
+title: ``Machine Learning Final Exam''\tabularnewline
+author: ``Sumit Dutt Mishra''\tabularnewline
+date: ``05/02/2021''\tabularnewline
+output:\tabularnewline
+word\_document: default\tabularnewline
+html\_document: default\tabularnewline
+pdf\_document: default\tabularnewline
+\bottomrule
+\end{longtable}
+
+\#\#\#Business Situation \#\#\#\#CRISA is an Asian market research
+agency that specializes in tracking consumer purchase behavior in
+consumer goods (both durable and nondurable). In one major research
+project, CRISA tracks numerous consumer product categories (e.g.,
+``detergents''), and, within each category, perhaps dozens of brands. To
+track purchase behavior, CRISA constituted household panels in over 100
+cities and towns in India, covering most of the Indian urban market. The
+households were carefully selected using stratified sampling to ensure a
+representative sample; a subset of 600 records is analyzed here. The
+strata were defined on the basis of socioeconomic status and the market
+(a collection of cities). CRISA has both transaction data (each row is a
+transaction) and household data (each row is a household), and for the
+household data it maintains the following information: \#\#\#\#\#●
+Demographics of the households (updated annually) \#\#\#\#\#● Possession
+of durable goods (car, washing machine, etc., updated annually; an
+``affluence index'' is computed from this information) \#\#\#\#\#●
+Purchase data of product categories and brands (updated monthly)
+\#\#\#\#CRISA has two categories of clients: (1) advertising agencies
+that subscribe to the database services, obtain updated data every
+month, and use the data to advise their clients on advertising and
+promotion strategies; (2) consumer goods manufacturers, which monitor
+their market share using the CRISA database.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ISLR)}
+\FunctionTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(factoextra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(GGally)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'GGally':
+##   method from   
+##   +.gg   ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\#\#\#Using k-means clustering for identifying clusters of households
+based on: \#\#\#\#a. The variables that describe purchase behavior
+(including brand loyalty) \#\#\#\#b. The variables that describe the
+basis for purchase \#\#\#\#c.~The variables that describe both purchase
+behavior and basis of purchase \#\#\#\#\#Reading And Cleaning the Data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{BathSoap }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"\textasciitilde{}/Downloads/BathSoap.csv"}\NormalTok{)}
+\NormalTok{BathsoapData }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(BathSoap, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\StringTok{"\%"}\NormalTok{, }\StringTok{""}\NormalTok{, x))))}
+\end{Highlighting}
+\end{Shaded}
+
+\#\#\#\#We gathered data from branded purchases based on the customer's
+purchase percentage on the Brand code, then found the highest brand
+loyal percentage and compared it to the other 999 brand purchases to
+determine brand loyalty.
+
+\#\#\#\#The Max Brand purchase percentage is higher than the Other Brand
+purchase percentage when a customer is loyal to a company. As a result,
+the customer develops a sense of brand loyalty.
+
+\#\#\#\#We are using k-means clustering to group attributes into 2
+sections:(i) Loyal Customers to Brand (ii) Disloyal Customers to Brand .
+For this we are taking k=2
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Loyalcustomers }\OtherTok{\textless{}{-}}\NormalTok{ BathsoapData[,}\DecValTok{23}\SpecialCharTok{:}\DecValTok{31}\NormalTok{]}
+\NormalTok{Loyalcustomers}\SpecialCharTok{$}\NormalTok{MaxBrand }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(Loyalcustomers,}\DecValTok{1}\NormalTok{,max)}
+\NormalTok{BathSoapBrandLoyalty }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(BathsoapData[,}\FunctionTok{c}\NormalTok{(}\DecValTok{19}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{15}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{31}\NormalTok{, }\DecValTok{14}\NormalTok{, }\DecValTok{16}\NormalTok{,}\DecValTok{20}\NormalTok{)], }\AttributeTok{MaximumLoyal =}\NormalTok{ Loyalcustomers}\SpecialCharTok{$}\NormalTok{MaxBrand)}
+\NormalTok{BathSoapBrandLoyalty }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(BathSoapBrandLoyalty)}
+\NormalTok{Kmeans\_model\_1 }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(BathSoapBrandLoyalty, }\AttributeTok{centers =} \DecValTok{2}\NormalTok{, }\AttributeTok{nstart =} \DecValTok{25}\NormalTok{)}
+\NormalTok{BathSoapBrandLoyalty }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(BathSoapBrandLoyalty, }\AttributeTok{Cluster =}\NormalTok{ Kmeans\_model\_1}\SpecialCharTok{$}\NormalTok{cluster)}
+\FunctionTok{fviz\_cluster}\NormalTok{(Kmeans\_model\_1, }\AttributeTok{data =}\NormalTok{ BathSoapBrandLoyalty)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalML_files/figure-latex/unnamed-chunk-3-1.pdf}
+\#\#\#\#Customers in Cluster 1 are Loyal to Brand, while customers in
+Cluster 2 are Disloyal to Brand because they are unconcerned regarding
+the products.
+
+\#\#\#\#If we even cluster them further and take k=4
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Kmeans\_model\_1 }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(BathSoapBrandLoyalty, }\AttributeTok{centers =} \DecValTok{4}\NormalTok{, }\AttributeTok{nstart =} \DecValTok{25}\NormalTok{)}
+\NormalTok{BathSoapBrandLoyalty\_4 }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(BathSoapBrandLoyalty[,}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{], }\AttributeTok{Cluster =}\NormalTok{ Kmeans\_model\_1}\SpecialCharTok{$}\NormalTok{cluster)}
+\FunctionTok{fviz\_cluster}\NormalTok{(Kmeans\_model\_1, }\AttributeTok{data =}\NormalTok{ BathSoapBrandLoyalty\_4)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalML_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\#\#\#\#\#Looking at the data for consumer purchase conduct.
+
+\#\#\#\#We've taken into account all of the selling propositions, chosen
+the best, and compared them to determine which are the most effective
+selling propositions to consider.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{BathSoap\_sellprep }\OtherTok{\textless{}{-}}\NormalTok{ BathsoapData[,}\DecValTok{36}\SpecialCharTok{:}\DecValTok{46}\NormalTok{]}
+\NormalTok{BathSoap\_sellprep}\SpecialCharTok{$}\NormalTok{Max }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(BathSoap\_sellprep,}\DecValTok{1}\NormalTok{,max)}
+\NormalTok{BathSoap\_sellprep}\SpecialCharTok{$}\NormalTok{MaxBrand }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(BathSoap\_sellprep)[}\FunctionTok{apply}\NormalTok{(BathSoap\_sellprep,}\DecValTok{1}\NormalTok{,which.max)]}
+\end{Highlighting}
+\end{Shaded}
+
+\#\#\#\#\#Categories that are close to the Price Catagories. The same
+can be said for Promotions..
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PriceCat }\OtherTok{\textless{}{-}}\NormalTok{ BathsoapData[,}\DecValTok{32}\SpecialCharTok{:}\DecValTok{35}\NormalTok{]}
+\NormalTok{PriceCat}\SpecialCharTok{$}\NormalTok{Max }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(PriceCat,}\DecValTok{1}\NormalTok{,max)}
+\NormalTok{PriceCat}\SpecialCharTok{$}\NormalTok{MaxBrand }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(PriceCat)[}\FunctionTok{apply}\NormalTok{(PriceCat,}\DecValTok{1}\NormalTok{,which.max)]}
+\FunctionTok{table}\NormalTok{(PriceCat}\SpecialCharTok{$}\NormalTok{MaxBrand)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Pr.Cat.1 Pr.Cat.2 Pr.Cat.3 Pr.Cat.4 
+##      132      343       78       47
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Promotion }\OtherTok{\textless{}{-}}\NormalTok{ BathsoapData[,}\DecValTok{20}\SpecialCharTok{:}\DecValTok{22}\NormalTok{]}
+\NormalTok{Promotion}\SpecialCharTok{$}\NormalTok{Max }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(Promotion,}\DecValTok{1}\NormalTok{,max)}
+\NormalTok{Promotion}\SpecialCharTok{$}\NormalTok{MaxBrand }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(Promotion)[}\FunctionTok{apply}\NormalTok{(Promotion,}\DecValTok{1}\NormalTok{,which.max)]}
+\FunctionTok{table}\NormalTok{(Promotion}\SpecialCharTok{$}\NormalTok{MaxBrand)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pur.Vol.No.Promo.... Pur.Vol.Other.Promo..     Pur.Vol.Promo.6.. 
+##                   595                     1                     4
+\end{verbatim}
+
+\#\#\#\#\#As a consequence, when assessing their effect, we've only
+looked at the more effective Selling Propositions. \#\#\#\#\#Promotions
+and price categories are in the same boat.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PurchBehaviour }\OtherTok{\textless{}{-}}\NormalTok{ BathsoapData[,}\FunctionTok{c}\NormalTok{(}\DecValTok{32}\NormalTok{,}\DecValTok{33}\NormalTok{,}\DecValTok{34}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{45}\NormalTok{)]}
+\NormalTok{PurchBehaviour }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(PurchBehaviour)}
+\CommentTok{\#View(PurchBehaviour)}
+\FunctionTok{fviz\_nbclust}\NormalTok{(PurchBehaviour, kmeans, }\AttributeTok{method =} \StringTok{"silhouette"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalML_files/figure-latex/unnamed-chunk-7-1.pdf}
+\#\#\#\#To determine the customer's buying pattern, the K means
+Clustering model is used. k = 4 will be used in this situation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Purch\_model }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(PurchBehaviour, }\AttributeTok{centers =} \DecValTok{4}\NormalTok{, }\AttributeTok{nstart =} \DecValTok{25}\NormalTok{)}
+\NormalTok{PurchBehaviour }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(PurchBehaviour, }\AttributeTok{Cluster =}\NormalTok{ Purch\_model}\SpecialCharTok{$}\NormalTok{cluster)}
+\CommentTok{\#View(PurchBehaviour)}
+\FunctionTok{fviz\_cluster}\NormalTok{(Purch\_model, }\AttributeTok{data =}\NormalTok{ PurchBehaviour)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalML_files/figure-latex/unnamed-chunk-8-1.pdf}
+\#\#\#\#When creating a definition, we must now consider the customers'
+brand loyalty as well as their buying behaviour.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LoyalPurch }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(BathSoapBrandLoyalty[,}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{], PurchBehaviour[,}\SpecialCharTok{{-}}\DecValTok{7}\NormalTok{])}
+\FunctionTok{fviz\_nbclust}\NormalTok{(LoyalPurch, kmeans, }\AttributeTok{method =} \StringTok{"silhouette"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalML_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{KMeans\_All }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(LoyalPurch, }\AttributeTok{centers =} \DecValTok{4}\NormalTok{, }\AttributeTok{nstart =} \DecValTok{25}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\#\#\#\#While plotting the model for k = 4 and k = 5, it is clearly
+visible that the aspects can be resolved by using 4 clusters without
+using 5. For this reason, we will use k=4 \#\#\#Selecting the best
+segmentation and commenting on the characteristics and Developing a
+model that classifies the data into these segments.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LoyalPurch}\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(LoyalPurch, }\AttributeTok{Cluster =} \FunctionTok{as.data.frame}\NormalTok{(KMeans\_All}\SpecialCharTok{$}\NormalTok{cluster))}
+\NormalTok{clusters }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{,}\StringTok{"2"}\NormalTok{,}\StringTok{"3"}\NormalTok{,}\StringTok{"4"}\NormalTok{),}\AttributeTok{nrow =} \DecValTok{4}\NormalTok{)}
+\NormalTok{LoyalPurch\_Centroid }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(clusters,}\FunctionTok{as.data.frame}\NormalTok{(KMeans\_All}\SpecialCharTok{$}\NormalTok{centers))}
+\FunctionTok{ggparcoord}\NormalTok{(LoyalPurch\_Centroid,}
+           \AttributeTok{columns =} \DecValTok{2}\SpecialCharTok{:}\DecValTok{16}\NormalTok{, }\AttributeTok{groupColumn =} \DecValTok{1}\NormalTok{,}
+           \AttributeTok{showPoints =} \ConstantTok{TRUE}\NormalTok{, }
+           \AttributeTok{title =} \StringTok{"Parallel Coordinate Plot for for Bathsoap Data {-} K = 4"}\NormalTok{,}
+           \AttributeTok{alphaLines =} \FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalML_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\#\#\#\#The Demographic result is computed for each cluster
+
+\hypertarget{converting-the-demographic-values-of-each-cluster.}{%
+\paragraph{Converting the demographic values of each
+cluster.}\label{converting-the-demographic-values-of-each-cluster.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Demograph }\OtherTok{\textless{}{-}}\FunctionTok{cbind}\NormalTok{(BathsoapData[,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{11}\NormalTok{], }\AttributeTok{ClusterVal =}\NormalTok{ KMeans\_All}\SpecialCharTok{$}\NormalTok{cluster)}
+\NormalTok{Center\_1 }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(Demograph[Demograph}\SpecialCharTok{$}\NormalTok{ClusterVal }\SpecialCharTok{==} \StringTok{"1"}\NormalTok{,])}
+\NormalTok{Center\_2 }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(Demograph[Demograph}\SpecialCharTok{$}\NormalTok{ClusterVal }\SpecialCharTok{==} \StringTok{"2"}\NormalTok{,])}
+\NormalTok{Center\_3 }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(Demograph[Demograph}\SpecialCharTok{$}\NormalTok{ClusterVal }\SpecialCharTok{==} \StringTok{"3"}\NormalTok{,])}
+\NormalTok{Center\_4 }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(Demograph[Demograph}\SpecialCharTok{$}\NormalTok{ClusterVal }\SpecialCharTok{==} \StringTok{"4"}\NormalTok{,])}
+\NormalTok{Centroids }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(Center\_1, Center\_2, Center\_3, Center\_4)}
+\FunctionTok{ggparcoord}\NormalTok{(Centroids,}
+           \AttributeTok{columns =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{8}\NormalTok{), }\AttributeTok{groupColumn =} \DecValTok{11}\NormalTok{,}
+           \AttributeTok{showPoints =} \ConstantTok{TRUE}\NormalTok{, }
+           \AttributeTok{title =} \StringTok{"Demographic Metrics for Bathsoap Data Plotted in Parallel Coordinate Plot{-} K = 4"}\NormalTok{,}
+           \AttributeTok{alphaLines =} \FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalML_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\#\#\#\#We are using a barplot because there are a few attributes that
+are categorical.
+
+\#\#\#\#Plotting Eating Habit Frequency (Not Specified,Vegetarian Who
+Eats Eggs, Vegetarian,Non-Vegetarian):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{barplot}\NormalTok{(}\FunctionTok{table}\NormalTok{(BathsoapData}\SpecialCharTok{$}\NormalTok{FEH,KMeans\_All}\SpecialCharTok{$}\NormalTok{cluster), }\AttributeTok{xlab =} \StringTok{"Cluster"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Frequency of Eating Habit"}\NormalTok{, }\AttributeTok{main =} \StringTok{"The Eating Habit Frequency for each cluster"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalML_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\#\#\#\#Plotting the Frequency of Gender like Male, Female and NA:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{barplot}\NormalTok{(}\FunctionTok{table}\NormalTok{(BathsoapData}\SpecialCharTok{$}\NormalTok{SEX,KMeans\_All}\SpecialCharTok{$}\NormalTok{cluster), }\AttributeTok{xlab =} \StringTok{"Clusters"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Frequency of Gender"}\NormalTok{, }\AttributeTok{main =} \StringTok{"The Gender Frequency for each cluster"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalML_files/figure-latex/unnamed-chunk-13-1.pdf}
+\#\#\#\#The female population has a higher purchasing rate, as females
+in clusters 1 and 2 have the most females.
+
+\#\#\#\#Plotting the Television Availability Frequency as Availability,
+Unavailability and Unspecified:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{barplot}\NormalTok{(}\FunctionTok{table}\NormalTok{(BathsoapData}\SpecialCharTok{$}\NormalTok{CS, KMeans\_All}\SpecialCharTok{$}\NormalTok{cluster), }\AttributeTok{xlab =} \StringTok{"Cluster"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Frequency of Television availability"}\NormalTok{, }\AttributeTok{main =} \StringTok{"The frequency of television availability"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalML_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\#\#\#\#Since almost everybody has access to television, a television
+adverti
+
+\end{document}
